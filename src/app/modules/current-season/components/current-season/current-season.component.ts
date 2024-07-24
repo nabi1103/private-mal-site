@@ -1,6 +1,6 @@
 // Framework
-import { Component, OnInit } from "@angular/core";
-import { Subscription } from "rxjs";
+import { Component, OnDestroy, OnInit } from "@angular/core";
+import { map, Observable, shareReplay, Subscription, timer } from "rxjs";
 // Plugins
 import { PaginationInstance } from "ngx-pagination";
 // Interfaces
@@ -14,15 +14,24 @@ import { JikanWrapperApiService } from "src/app/modules/share/services/api/jikan
     styleUrls: ["./current-season.component.scss"],
 })
 
-export class CurrentSeasonComponent implements OnInit {
+export class CurrentSeasonComponent implements OnInit, OnDestroy {
     private subscription = new Subscription();
     resource: Anime[] = [];
 
     config: PaginationInstance = {
-        itemsPerPage: 25,
+        itemsPerPage: 0,
         currentPage: 1,
         totalItems: 0,
     };
+
+    private _time$: Observable<Date> = timer(0, 1000).pipe(
+        map(tick => new Date()),
+        shareReplay(1)
+    );
+
+    get time() {
+        return this._time$;
+    }
 
     constructor(
         protected api: JikanWrapperApiService,
@@ -30,6 +39,10 @@ export class CurrentSeasonComponent implements OnInit {
 
     ngOnInit(): void {
         this.loadData();
+    }
+
+    ngOnDestroy(): void {
+        this.subscription.unsubscribe();
     }
 
     onPageChange(currentPage: number): void {
@@ -42,6 +55,7 @@ export class CurrentSeasonComponent implements OnInit {
             (res) => {
                 this.resource = res.data;
                 this.config.totalItems = res.pagination.items.total;
+                this.config.itemsPerPage = res.pagination.items.per_page;
             },
             (err) => {
                 console.error(err);

@@ -1,0 +1,46 @@
+.chevron {
+    margin-top: 5px;
+    width: 16px;
+    height: 16px;
+    background-repeat: no-repeat;
+
+    &--changeable {
+        background-image: url("/assets/icons/chevron_down.svg")
+    }
+}
+
+.clickable {
+    cursor: pointer;
+}
+
+
+.collapsed:has(.chevron--changeable) {
+    .chevron--changeable {
+        background-image: url("/assets/icons/chevron_right.svg");
+    }
+}
+
+.no-link {
+    color: white;
+}
+
+.no-link:hover {
+    text-decoration: none;
+}
+
+.anime {
+    &--wrapper {
+        padding: 8px;
+        border-radius: 10px;
+        box-shadow: 5px 5px 5px #dad5d5;
+    }
+
+    &--image {
+        border-radius: 10px;
+        box-shadow: 5px 5px 5px #dad5d5;
+    }
+
+    &--text {
+        padding: 4px 0px;
+    }
+}

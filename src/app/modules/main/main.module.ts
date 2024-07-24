@@ -6,6 +6,7 @@ import { MainRoutingModule } from "./main-routing.module";
 // Components
 import { MainComponent } from "./components/main/main.component";
 import { HeaderModule } from "../header/header.module";
+import { CurrentSeasonModule } from "../current-season/current-season.module";
 
 @NgModule({
     declarations: [
@@ -15,6 +16,7 @@ import { HeaderModule } from "../header/header.module";
         CommonModule,
         MainRoutingModule,
         HeaderModule,
+        CurrentSeasonModule,
     ],
 })
 export class MainModule {}

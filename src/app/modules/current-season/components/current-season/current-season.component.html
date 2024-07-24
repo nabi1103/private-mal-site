@@ -1,21 +1,67 @@
 <div class="container-fluid">
-    <div class="row">
+    <header class="row">
         <div class="col-12">
             <h2>
                 Currently airing
             </h2>
+            <h5 class="text-center">
+                {{ time | async | date: "HH:mm:ss" : "+0900" }}
+            </h5>
         </div>
-        <div class="col-12">
-            <div class="table-responsive">
-                <tbody>
-                    <tr *ngFor="let anime of resource | paginate: config">
-                        {{ anime.title }}
-                    </tr>
-                </tbody>
+    </header>
+    <section class="row">
+        <div class="col-12" *ngFor="let anime of resource | paginate: config; let i = index">
+            <div class="accordion anime--wrapper">
+                <div class="row clickable collapsed my-1" data-toggle="collapse" [attr.data-target]="'#collapse-' + i">
+                    <div class="col-12">
+                        <div class="d-flex">
+                            <div class="chevron--changeable chevron"></div>
+                            <span class="mx-3 font-weight-bold">
+                                {{ anime.title }}
+                            </span>
+                            <div class="ml-1 font-italic" *ngFor="let genre of anime?.genres; let i = index">
+                                {{ genre.name }} {{ (anime?.genres !== null && anime.genres.length - 1 == i) ? "" : "," }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row collapse my-1" [id]="'collapse-' + i">
+                    <div class="col-4 d-flex justify-content-center align-items-start">
+                        <img [src]="anime.images.jpg.image_url" class="anime--image">
+                    </div>
+                    <div class="col-8">
+                        <div class="anime--text">
+                            <span class="font-weight-bold">
+                                Synopsis:
+                            </span>
+                            {{ anime?.synopsis }}
+                        </div>
+                        <div class="anime--text">
+                            <span class="font-weight-bold">
+                                Broadcast:
+                            </span>
+                            {{ anime?.broadcast?.string }}
+                        </div>
+                        <div class="anime--text">
+                            <span class="font-weight-bold">
+                                Trailer:
+                            </span>
+                            <a target="_blank" [href]="anime?.trailer?.url">MAL</a>
+                        </div>
+                        <div class="anime--text">
+                            <span class="font-weight-bold">
+                                Source:
+                            </span>
+                            <a target="_blank" [href]="anime?.url">MAL</a>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
+    </section>
+    <section class="row mt-3">
         <div class="col-12 d-flex justify-content-center">
             <pagination-controls (pageChange)="onPageChange($event)" previousLabel="" nextLabel=""></pagination-controls>
         </div>
-    </div>
+    </section>
 </div>
