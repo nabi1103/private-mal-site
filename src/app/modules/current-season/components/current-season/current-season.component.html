@@ -1,3 +1,4 @@
+<app-schedule></app-schedule>
 <div class="container-fluid">
     <header class="row">
         <div class="col-12">
@@ -6,11 +7,6 @@
             </h2>
         </div>
     </header>
-    <section class="row">
-        <div class="col-12">
-            <app-schedule></app-schedule>
-        </div>
-    </section>
     <section class="row">
         <div class="col-12" *ngFor="let anime of resource | paginate: config; let i = index">
             <div class="accordion anime--wrapper">
