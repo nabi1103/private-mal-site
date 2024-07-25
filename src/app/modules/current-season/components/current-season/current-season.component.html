@@ -4,11 +4,13 @@
             <h2>
                 Currently airing
             </h2>
-            <h5 class="text-center">
-                {{ time | async | date: "HH:mm:ss" : "+0900" }}
-            </h5>
         </div>
     </header>
+    <section class="row">
+        <div class="col-12">
+            <app-schedule></app-schedule>
+        </div>
+    </section>
     <section class="row">
         <div class="col-12" *ngFor="let anime of resource | paginate: config; let i = index">
             <div class="accordion anime--wrapper">

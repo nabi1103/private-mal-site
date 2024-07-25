@@ -1,6 +1,6 @@
 // Framework
 import { Component, OnDestroy, OnInit } from "@angular/core";
-import { map, Observable, shareReplay, Subscription, timer } from "rxjs";
+import { Subscription } from "rxjs";
 // Plugins
 import { PaginationInstance } from "ngx-pagination";
 // Interfaces
@@ -23,15 +23,6 @@ export class CurrentSeasonComponent implements OnInit, OnDestroy {
         currentPage: 1,
         totalItems: 0,
     };
-
-    private _time$: Observable<Date> = timer(0, 1000).pipe(
-        map(tick => new Date()),
-        shareReplay(1)
-    );
-
-    get time() {
-        return this._time$;
-    }
 
     constructor(
         protected api: JikanWrapperApiService,
