@@ -5,8 +5,40 @@
                 My schedule
             </h2>
             <h5 class="text-center">
-                {{ time | async | date: "HH:mm:ss" : "+0900" }}
+                <!-- Current JST time: <span class="text--blue">{{ time | async | date: "EEEE, HH:mm:ss" : "+0900" }}</span> -->
             </h5>
         </div>
     </header>
+    <section class="row my-2">
+        <div class="col-12" *ngFor="let day of week">
+            <ng-container
+                *ngTemplateOutlet="dayTemplate; context: { weekday: day, animeArray: getAnimeOnWeekday(day) }"
+            >
+            </ng-container>
+            <ng-template #dayTemplate let-day="weekday" let-anime="animeArray">
+                <div class="row schedule--row">
+                    <div class="col-2">
+                        {{ day }}
+                    </div>
+                    <div class="col-10">
+                        <div class="row" *ngFor="let a of anime">
+                            <div class="col-2">
+                                {{ a?.broadcast?.time }}
+                            </div>
+                            <div class="col-9">
+                                {{ a?.title }}
+                            </div>
+                            <div class="col-1 clickable font-weight-bold" (click)="deleteEntry(a?.mal_id)">
+                                X
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ng-template>
+        </div>
+    </section>
+    <section class="row justify-content-center">
+        <button class="btn btn-warn" (click)="deleteSchedule()">Remove all entries</button>
+    </section>
 </div>
+
