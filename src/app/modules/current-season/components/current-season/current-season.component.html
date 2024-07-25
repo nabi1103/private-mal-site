@@ -1,5 +1,7 @@
 <app-schedule
     [resource]="schedule"
+    (onDeleteOneEntryClicked)="deleteEntry($event)"
+    (onDeleteScheduleClicked)="deleteSchedule()"
 >
 </app-schedule>
 <div class="container-fluid">

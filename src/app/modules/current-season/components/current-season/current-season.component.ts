@@ -57,6 +57,30 @@ export class CurrentSeasonComponent implements OnInit, OnDestroy {
         this.loadLocalData();
     }
 
+    deleteEntry(id: string): void {
+        this.subscription.add(
+            this.localStorage.delete(id).subscribe(
+                () => {},
+                (err) => {
+                    console.error(err);
+                }
+            )
+        );
+        this.loadLocalData();
+    }
+
+    deleteSchedule(): void {
+        this.subscription.add(
+            this.localStorage.deleteAll().subscribe(
+                () => {},
+                (err) => {
+                    console.error(err);
+                }
+            )
+        );
+        this.loadLocalData();
+    }
+
     private loadData() {
         this.subscription.add(this.api.getCurrentSeason(this.config.currentPage).subscribe(
             (res) => {
