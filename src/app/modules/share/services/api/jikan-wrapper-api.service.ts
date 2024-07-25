@@ -20,7 +20,7 @@ export class JikanWrapperApiService {
     }
 
     getCurrentSeason(currentPage: number): Observable<ResponseList<Anime>> {
-        return this.httpClient.get<ResponseList<Anime>>(this.apiUrl + "/seasons/now?page=" + currentPage);
+        return this.httpClient.get<ResponseList<Anime>>(this.apiUrl + "/seasons/now?continuing&page=" + currentPage);
     }
 
     getNextAnime(apiNum: number): Observable<ResponseList<Anime>> {
