@@ -1,2 +1,26 @@
 /* You can add global styles to this file, and also import other style files */
 @import "bootstrap/scss/bootstrap";
+
+.clickable {
+    cursor: pointer;
+}
+
+.btn-filled {
+    background-color: rgba(95, 243, 174, 0.89);
+    border-radius: 10px;
+    color: white;
+
+    &:focus {
+        box-shadow: none;
+    }
+}
+
+.btn-warn {
+    background-color: rgba(212, 38, 38, 0.89);
+    border-radius: 10px;
+    color: white;
+
+    &:focus {
+        box-shadow: none;
+    }
+}

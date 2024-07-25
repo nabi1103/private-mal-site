@@ -1,0 +1,14 @@
+.schedule {
+    &--row {
+        border-bottom: solid 1px black;
+        padding: 0px;
+        margin: 0px !important;
+        padding: 6px 0px;
+    }
+}
+
+.text {
+    &--blue {
+        color: rgb(90, 135, 202);
+    }
+}
