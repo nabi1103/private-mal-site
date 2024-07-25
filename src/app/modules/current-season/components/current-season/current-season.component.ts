@@ -7,6 +7,7 @@ import { PaginationInstance } from "ngx-pagination";
 import { Anime } from "src/app/modules/share/interfaces/anime.interface";
 // Services
 import { JikanWrapperApiService } from "src/app/modules/share/services/api/jikan-wrapper-api.service";
+import { LocalStorageService } from "src/app/modules/share/services/api/local-storage.service";
 
 @Component({
     selector: "app-current-season",
@@ -17,6 +18,7 @@ import { JikanWrapperApiService } from "src/app/modules/share/services/api/jikan
 export class CurrentSeasonComponent implements OnInit, OnDestroy {
     private subscription = new Subscription();
     resource: Anime[] = [];
+    schedule: any = null;
 
     config: PaginationInstance = {
         itemsPerPage: 0,
@@ -26,10 +28,12 @@ export class CurrentSeasonComponent implements OnInit, OnDestroy {
 
     constructor(
         protected api: JikanWrapperApiService,
+        protected localStorage: LocalStorageService,
     ) { }
 
     ngOnInit(): void {
         this.loadData();
+        this.loadLocalData();
     }
 
     ngOnDestroy(): void {
@@ -41,12 +45,35 @@ export class CurrentSeasonComponent implements OnInit, OnDestroy {
         this.loadData();
     }
 
+    onAddToScheduleClicked(id: number, object: Anime): void {
+        this.subscription.add(
+            this.localStorage.save(id.toString(), JSON.stringify(object)).subscribe(
+                () => { },
+                (err) => {
+                    console.error(err);
+                }
+            ));
+        ;
+        this.loadLocalData();
+    }
+
     private loadData() {
         this.subscription.add(this.api.getCurrentSeason(this.config.currentPage).subscribe(
             (res) => {
                 this.resource = res.data;
                 this.config.totalItems = res.pagination.items.total;
                 this.config.itemsPerPage = res.pagination.items.per_page;
+            },
+            (err) => {
+                console.error(err);
+            }
+        ));
+    }
+
+    private loadLocalData() {
+        this.subscription.add(this.localStorage.getAll().subscribe(
+            (res) => {
+                this.schedule = res;
             },
             (err) => {
                 console.error(err);
