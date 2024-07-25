@@ -1,4 +1,7 @@
-<app-schedule></app-schedule>
+<app-schedule
+    [resource]="schedule"
+>
+</app-schedule>
 <div class="container-fluid">
     <header class="row">
         <div class="col-12">
@@ -51,6 +54,9 @@
                                 Source:
                             </span>
                             <a target="_blank" [href]="anime?.url">MAL</a>
+                        </div>
+                        <div class="row justify-content-center">
+                            <button class="btn btn-filled" (click)="onAddToScheduleClicked(anime.mal_id, anime)">Add to my schedule</button>
                         </div>
                     </div>
                 </div>
